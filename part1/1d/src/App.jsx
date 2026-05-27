@@ -1,5 +1,19 @@
 import { useState } from "react";
 
+const Statistics = (props) => {
+  return (
+    <>
+      <h2>Statistics</h2>
+      <p>good {props.good}</p>
+      <p>neutral {props.neutral}</p>
+      <p>bad {props.bad}</p>
+      <p>total {props.total}</p>
+      <p>average {props.average}</p>
+      <p>positive {props.positive}%</p>
+    </>
+  );
+};
+
 const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
@@ -13,44 +27,43 @@ const App = () => {
     const updatedTotal = updatedGood + bad + neutral;
     setGood(updatedGood);
     setTotal(updatedTotal);
-    setAverage((updatedGood - bad)/updatedTotal);
-    setPositive(100 * updatedGood/updatedTotal);
-  }
+    setAverage((updatedGood - bad) / updatedTotal);
+    setPositive((100 * updatedGood) / updatedTotal);
+  };
   const handleNeutral = () => {
     const updatedNeutral = neutral + 1;
-    const updatedTotal = good + bad + updatedNeutral
+    const updatedTotal = good + bad + updatedNeutral;
     setNeutral(updatedNeutral);
     setTotal(updatedTotal);
-    setAverage((good - bad)/updatedTotal);
-    setPositive(100 * good/updatedTotal)
-  }
+    setAverage((good - bad) / updatedTotal);
+    setPositive((100 * good) / updatedTotal);
+  };
   const handleBad = () => {
     const updatedBad = bad + 1;
     const updatedTotal = good + updatedBad + neutral;
     setBad(updatedBad);
     setTotal(updatedTotal);
-    setAverage((good - updatedBad)/updatedTotal);
-    setPositive(100 * good/updatedTotal);
-  }
-
+    setAverage((good - updatedBad) / updatedTotal);
+    setPositive((100 * good) / updatedTotal);
+  };
 
   return (
     <div>
       <h1>Give Feedback</h1>
-      <button onClick = {handleGood}>good</button>
+      <button onClick={handleGood}>good</button>
       <button onClick={handleNeutral}>neutral</button>
       <button onClick={handleBad}>bad</button>
       <br />
-
-      <h2>Statistics</h2>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>total {total}</p>
-      <p>average {average}</p>
-      <p>positive {positive}%</p>
+      <Statistics
+        good={good}
+        bad={bad}
+        neutral={neutral}
+        total={total}
+        average={average}
+        positive={positive}
+      />
     </div>
-  )
-}
+  );
+};
 
 export default App;
