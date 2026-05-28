@@ -1,9 +1,8 @@
 const Total = (props) => {
-    let sum = 0;
-    for(let i = 0; i<=2; i++){
-        sum += props.data[i].exercises;
-    }
-
+    let sum = props.data.reduce((acc, current) => {
+        return acc + current.exercises;
+    }, 0);
+    
     return(
         <p>total of {sum} exercises</p>
     )
