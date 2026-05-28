@@ -3,11 +3,11 @@ import Part from "./Part";
 const Content = (props) => {
   return (
     <>
-    <Part data = {props.content[0]} />
-    <Part data = {props.content[1]} />
-    <Part data = {props.content[2]} />
+      {props.content.map((part) => {
+        return <Part key={part.id} data={part} />;
+      })}
     </>
-  )
-}
+  );
+};
 
 export default Content;
