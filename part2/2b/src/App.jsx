@@ -7,16 +7,18 @@ const App = () => {
   const [newName, setNewName] = useState('')
 
   const handleInputChange = (event) => {
-    console.log(newName);
     setNewName(event.target.value);
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if(persons.find(obj => obj.name === newName)){
+      alert(`${newName} is already added to phonebook`);
+      return;
+    };
     const newPersonObject = {"name" : newName};
     const newPersonArray = persons.concat(newPersonObject);
     setPersons(newPersonArray);
-    console.log(persons);
   }
 
   return (
