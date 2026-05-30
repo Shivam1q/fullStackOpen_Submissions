@@ -2,6 +2,7 @@ import { useState } from "react";
 import SearchBar from "./SearchBar";
 import Form from "./Form";
 import List from "./List";
+import {addPerson} from "../services/phonebookServices";
 
 const Phonebook = (props) => {
   const [newName, setNewName] = useState("");
@@ -25,10 +26,10 @@ const Phonebook = (props) => {
     const newPersonObject = {
       name: newName,
       number: newNumber,
-      id: props.persons.length + 1,
     };
-    const newPersonArray = props.persons.concat(newPersonObject);
-    props.setPersons(newPersonArray);
+    addPerson(newPersonObject).then(personList => {
+        props.setPersons(props.persons.concat(personList));
+    })
   };
 
   const handleSearch = (event) => {
