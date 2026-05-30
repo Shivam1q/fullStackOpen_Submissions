@@ -2,12 +2,28 @@ import { useState } from "react";
 import SearchBar from "./SearchBar";
 import Form from "./Form";
 import List from "./List";
-import {addPerson} from "../services/phonebookServices";
+import {addPerson, deletePerson} from "../services/phonebookServices";
 
 const Phonebook = (props) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [searchInput, setSearchInput] = useState("");
+
+  const handleDelete = (id) => {
+    const person = props.persons.find(person => person.id === id);
+    if(person === undefined){
+        alert(`Requested person not in the list.`);
+        return;
+    }else{
+        const result = window.confirm(`Do you really want to delete ${person.name}?`);
+        console.log(result);
+        if(result === false) return;
+    }
+    deletePerson(id).then(data => {
+        const newList = props.persons.filter(person => person.id !== data.id);
+        props.setPersons(newList);
+    }).catch(error => console.log(error));
+  };
 
   const handleInputChange = (event) => {
     setNewName(event.target.value);
@@ -52,7 +68,7 @@ const Phonebook = (props) => {
         newNumber={newNumber}
       />
       <h2>Numbers</h2>
-      <List persons={props.persons} searchInput={searchInput} />
+      <List persons={props.persons} searchInput={searchInput} handleDelete={handleDelete} />
     </div>
   );
 };
